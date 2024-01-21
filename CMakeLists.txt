@@ -56,19 +56,21 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 #Set the header and source files.
-set(NRLMSISE00_HEADERS "${SRCROOT}/nrlmsise-00.h")
-set(NRLMSISE00_SOURCES "${SRCROOT}/nrlmsise-00.c"
-                       "${SRCROOT}/nrlmsise-00_data.c")
+set(NRLMSISE00_HEADERS "${SRCROOT}/include/nrlmsise-00.h")
+set(NRLMSISE00_SOURCES "${SRCROOT}/src/nrlmsise-00.c"
+                       "${SRCROOT}/src/nrlmsise-00_data.c")
 
 # Add static libraries.
 add_library(nrlmsise00 STATIC ${NRLMSISE00_SOURCES} ${NRLMSISE00_HEADERS})
+
+target_include_directories(nrlmsise00 PUBLIC "${SRCROOT}/include")
 
 # Define option and build test executables
 OPTION(NRLMSISE00_WITH_TESTS "Compile NRLMSISE-00 test executables" ON)
 IF(NRLMSISE00_WITH_TESTS)
         enable_testing()
-        add_executable(nrlmsise-test "${SRCROOT}/nrlmsise-00_test.c")
-        target_link_libraries(nrlmsise-test nrlmsise00 m)
+        add_executable(nrlmsise-test "${SRCROOT}/src/nrlmsise-00_test.c")
+        target_link_libraries(nrlmsise-test nrlmsise00)
         add_test(nrlmsise-test "${SRCROOT}/bin/nrlmsise-test")
 ENDIF()
 
