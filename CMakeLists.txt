@@ -65,7 +65,7 @@ add_library(nrlmsise00 STATIC ${NRLMSISE00_SOURCES} ${NRLMSISE00_HEADERS})
 
 target_include_directories(nrlmsise00 
     PUBLIC 
-    $<BUILD_INTERFACE:"${SRCROOT}/include">
+    $<BUILD_INTERFACE:${SRCROOT}/include>
 )
 
 target_sources(nrlmsise00
