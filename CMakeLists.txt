@@ -63,7 +63,19 @@ set(NRLMSISE00_SOURCES "${SRCROOT}/src/nrlmsise-00.c"
 # Add static libraries.
 add_library(nrlmsise00 STATIC ${NRLMSISE00_SOURCES} ${NRLMSISE00_HEADERS})
 
-target_include_directories(nrlmsise00 PUBLIC "${SRCROOT}/include")
+target_include_directories(nrlmsise00 
+    PUBLIC 
+    $<BUILD_INTERFACE:"${SRCROOT}/include">
+)
+
+target_sources(nrlmsise00
+    PUBLIC
+        FILE_SET installed_headers
+        TYPE HEADERS
+        BASE_DIRS 
+            include
+        FILES ${NRLMSISE00_HEADERS}
+)
 
 # Define option and build test executables
 OPTION(NRLMSISE00_WITH_TESTS "Compile NRLMSISE-00 test executables" ON)
